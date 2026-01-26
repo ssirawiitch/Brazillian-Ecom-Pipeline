@@ -90,3 +90,45 @@ python scripts/upload_to_bq.py
 cd dbt_project
 dbt build
 ```
+---
+
+# 🔄 Project Workflow & Data Pipeline Architecture
+
+This document outlines the end-to-end data lifecycle of the E-commerce Data Platform, from raw data ingestion to final visualization.
+
+
+
+---
+
+## 🏗️ The 5-Step Workflow
+
+### 1. Data Source & Preparation
+* **Source:** Brazilian E-Commerce Public Dataset (Olist).
+  link: https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
+* **Format:** Static CSV files representing a relational database schema (Orders, Payments, Customers, etc.).
+* **Simulation:** To simulate a real-world production environment, the pipeline is designed to process data in **Daily Incremental Batches** rather than a single bulk upload.
+
+### 2. Automated Ingestion (Extract & Load)
+This stage is triggered automatically by **GitHub Actions** (Scheduled Cron Job).
+* **Trigger:** Every day at 00:00 UTC.
+* **Process:** 1. The Python script (`upload_to_bq.py`) initializes.
+    2. It identifies the "Watermark" (the latest date already present in BigQuery).
+    3. It filters the source CSV for rows matching the "Current Date" (e.g., Today's orders).
+    4. Data is appended to the **Raw Layer** in **Google BigQuery**.
+
+### 3. Data Transformation (The dbt Cycle)
+Once the raw data is landed, **dbt (Data Build Tool)** takes over to transform the "messy" data into a structured **Star Schema**.
+* **Staging Layer:** Cleaning, renaming, and casting data types.
+* **Intermediate Layer:** Joining tables (e.g., joining `orders` with `order_items` and `payments`).
+* **Mart Layer:** Creating high-performance **Fact** and **Dimension** tables optimized for analytics.
+
+### 4. Data Quality & Validation
+Before the data reaches the dashboard, automated tests are executed:
+* **Schema Tests:** Ensuring `order_id` is unique and `customer_id` is not null.
+* **Business Logic Tests:** Verifying that `order_delivery_date` is not before `order_purchase_timestamp`.
+* **Failure Alerting:** If a test fails, the workflow stops, and an alert is sent to prevent corrupted data from reaching the BI tool.
+
+### 5. Visualization & Business Intelligence
+* **Connection:** **Looker Studio** connects directly to the `marts` dataset in BigQuery.
+* **Refresh:** The dashboard automatically reflects the new data appended by the daily pipeline.
+* **KPIs:** Monitoring Revenue trends, Customer lifetime value (CLV), and Logistics performance.
