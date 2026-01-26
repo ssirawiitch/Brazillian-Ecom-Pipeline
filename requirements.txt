@@ -1,1 +1,3 @@
 "path": "C:\\Users\\siraw\\.cache\\kagglehub\\datasets\\olistbr\\brazilian-ecommerce\\versions\\2"
+python: 3.9
+anaconda env: dbt-env
