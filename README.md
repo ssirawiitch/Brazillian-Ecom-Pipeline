@@ -71,3 +71,22 @@ The transformation logic is organized into three distinct layers:
 ├── .github/workflows/    # CI/CD and Automation schedules
 ├── requirements.txt      # Project dependencies
 └── README.md
+```
+---
+## 🛠️ Installation & Setup
+1. Clone the Repository:
+
+```bash
+git clone [https://github.com/your-username/ecommerce-data-pipeline.git](https://github.com/your-username/ecommerce-data-pipeline.git)
+```
+
+2. Download datatset by running loaddataset.py file
+3. Run Ingestion:
+```bash
+python scripts/upload_to_bq.py
+```
+4. Execute dbt Models:
+```bash
+cd dbt_project
+dbt build
+```
