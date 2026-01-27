@@ -3,7 +3,7 @@ name: KaggleHub Download Smoke Test
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 17 * * *"  # 00:00 Thailand time (ICT)
+    - cron: "0 0 * * *"
 
 jobs:
   test-download:
@@ -12,6 +12,9 @@ jobs:
       KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
       KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
 
+      # GCP / BigQuery
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+      BIGQUERY_TOKEN: ${{ secrets.BIGQUERY_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,3 +36,6 @@ jobs:
 
       - name: Run smoke test
         run: python scripts/test_kagglehub_download.py
+
+      - name: Upload to BigQuery
+        run: python scripts/upload_to_bigquery.py
