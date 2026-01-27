@@ -1,0 +1,35 @@
+name: KaggleHub Download Smoke Test
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 17 * * *"  # 00:00 Thailand time (ICT)
+
+jobs:
+  test-download:
+    runs-on: ubuntu-latest
+    env:
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install deps
+        run: |
+          pip install -r requirements.txt
+
+      - name: Configure legacy kaggle.json (for compatibility)
+        run: |
+          mkdir -p ~/.kaggle
+          echo "{\"username\":\"$KAGGLE_USERNAME\",\"key\":\"$KAGGLE_KEY\"}" > ~/.kaggle/kaggle.json
+          chmod 600 ~/.kaggle/kaggle.json
+
+      - name: Run smoke test
+        run: python scripts/test_kagglehub_download.py
