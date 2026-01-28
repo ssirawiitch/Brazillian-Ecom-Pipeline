@@ -39,7 +39,7 @@ The system architecture is designed with modularity in mind:
 ## 🚀 Pipeline Details
 
 ### 1. Data Ingestion (Python)
-The ingestion script (`scripts/upload_to_bq.py`) handles:
+The ingestion script (`scripts/upload_to_biguery.py`) handles:
 * Connecting to Google Cloud using Service Account credentials.
 * Schema auto-detection for raw CSV files.
 * Loading data into a `raw_data` dataset in BigQuery.
