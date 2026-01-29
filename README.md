@@ -62,8 +62,8 @@ The transformation logic is organized into three distinct layers:
 ├── dbt_project/          # dbt models and configurations
 │   ├── models/
 │   │   ├── staging/      # Layer 1: Data cleaning & Type casting
-│   │   ├── intermediate/ # Layer 2: Business logic & Joins
-│   │   └── marts/        # Layer 3: Analytics-ready Fact/Dim tables
+│   │   ├── marts/        # Layer 2: Star Schema
+│   │   └── sources.yml  
 │   ├── tests/            # Custom data quality tests
 │   └── dbt_project.yml
 ├── scripts/              # Python ingestion scripts
