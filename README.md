@@ -132,3 +132,6 @@ Before the data reaches the dashboard, automated tests are executed:
 * **Connection:** **Looker Studio** connects directly to the `marts` dataset in BigQuery.
 * **Refresh:** The dashboard automatically reflects the new data appended by the daily pipeline.
 * **KPIs:** Monitoring Revenue trends, Customer lifetime value (CLV), and Logistics performance.
+
+### 6. Result
+![alt text](result/image.png)
