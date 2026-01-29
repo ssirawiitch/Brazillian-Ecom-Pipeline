@@ -1,0 +1,17 @@
+# For telling dbt where to find your raw data
+
+version: 2
+sources:
+  - name: olist_raw
+    database: moonlit-haven-485607-g6
+    schema: olist
+    tables:
+      - name: orders
+      - name: order items
+      - name: customers
+      - name: products
+      - name: category name
+      - name: geolocation
+      - name: order payments
+      - name: order reviews
+      - name: sellers
