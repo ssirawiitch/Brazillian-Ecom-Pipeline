@@ -135,3 +135,4 @@ Before the data reaches the dashboard, automated tests are executed:
 
 ### 6. Result
 ![alt text](result/image.png)
+![alt text](result/image1.png)
